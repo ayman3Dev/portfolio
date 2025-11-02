@@ -2,6 +2,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { Mail, MapPin, Phone } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { trpc } from '@/lib/trpc'; // Add this line
 
 export function ContactSection() {
   const { t } = useLanguage();
@@ -52,33 +54,41 @@ export function ContactSection() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
 
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    try {
-      // Simulate form submission
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+  if (!validateForm()) {
+    return;
+  }
 
-      // Reset form
-      setFormData({ name: '', email: '', message: '' });
-      setSubmitStatus('success');
+  setIsSubmitting(true);
+  setSubmitStatus('idle');
 
-      // Reset status after 3 seconds
-      setTimeout(() => setSubmitStatus('idle'), 3000);
-    } catch (error) {
-      setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus('idle'), 3000);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  try {
+    await emailjs.send(
+      'service_h9gh5sj',
+      'template_sz8sjyu',
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+      },
+      'gY115BPuUbOf8bD0v'
+    );
+
+    setFormData({ name: '', email: '', message: '' });
+    setSubmitStatus('success');
+    setTimeout(() => setSubmitStatus('idle'), 3000);
+  } catch (error) {
+    console.error('Failed to send email:', error);
+    setSubmitStatus('error');
+    setTimeout(() => setSubmitStatus('idle'), 3000);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -143,10 +153,10 @@ export function ContactSection() {
                   <div>
                     <h3 className="text-lg font-bold text-white mb-1">Email</h3>
                     <a
-                      href="mailto:aymancvx@gmail.com"
+                      href="mailto:aymancvx2@gmail.com"
                       className="text-gray-400 hover:text-green-400 transition-colors"
                     >
-                      aymancvx@gmail.com
+                      aymancvx2@gmail.com
                     </a>
                   </div>
                 </div>
