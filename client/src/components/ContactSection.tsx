@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import emailjs from '@emailjs/browser';
-import { trpc } from '@/lib/trpc'; // Add this line
 
 export function ContactSection() {
   const { t } = useLanguage();
@@ -68,14 +67,14 @@ const handleSubmit = async (e: React.FormEvent) => {
 
   try {
     await emailjs.send(
-      'service_h9gh5sj',
-      'template_sz8sjyu',
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
       {
         from_name: formData.name,
         from_email: formData.email,
         message: formData.message,
       },
-      'gY115BPuUbOf8bD0v'
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     );
 
     setFormData({ name: '', email: '', message: '' });
