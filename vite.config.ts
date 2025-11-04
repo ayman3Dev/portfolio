@@ -4,7 +4,7 @@ import path from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/portfolio/" : "/",
+  base: mode === "production" ? "./" : "/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

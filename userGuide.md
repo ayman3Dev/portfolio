@@ -62,7 +62,7 @@ The Contact section includes:
 
 - **Contact form** - Fill in your name, email, and message, then click "Send Message"
 - **Email address** - Direct mailto link to your email
-- **Location** - Your current location (Casablanca, Morocco)
+- **Location** - Your current location (Khouribga, Morocco)
 - **Social links** - Quick access to your GitHub and LinkedIn profiles
 
 The form validates all fields before submission and provides instant feedback.
